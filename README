@@ -1,0 +1,63 @@
+# strava_data_scraping
+
+Small utilities to download and process Strava activity data.
+
+Overview
+- Two Python scripts:
+    - `scrape_strava.py` — connects to Strava (API or web) and exports raw activity data (JSON/CSV).
+    - `process_activities.py` — normalizes and aggregates raw data into CSV/SQLite for analysis.
+
+Requirements
+- Python 3.8+
+- Install dependencies:
+    ```
+    pip install -r requirements.txt
+    ```
+    (If no requirements file exists, typical libs: requests, pandas, python-dotenv, sqlalchemy)
+
+Configuration
+- Provide credentials/config via environment variables or a `.env` file:
+    - STRAVA_CLIENT_ID
+    - STRAVA_CLIENT_SECRET
+    - STRAVA_ACCESS_TOKEN (or set up an OAuth flow)
+    - OUTPUT_DIR (optional, default: `data/`)
+
+Usage
+
+1) Download raw data
+- Example:
+    ```
+    python scrape_strava.py --output data/raw_activities.json
+    ```
+- Flags commonly available:
+    - `--output` path to save raw export
+    - `--athlete-id` to limit to a single athlete
+    - `--since` / `--until` date range
+
+2) Process and export
+- Example:
+    ```
+    python process_activities.py --input data/raw_activities.json --out-csv data/activities.csv --db data/activities.db
+    ```
+- Typical processing tasks:
+    - flatten nested JSON fields
+    - compute derived metrics (distance_km, elapsed_minutes, avg_speed)
+    - filter by activity type/date
+    - store results to CSV and/or SQLite
+
+Examples
+- Full run:
+    ```
+    python scrape_strava.py --output data/raw.json
+    python process_activities.py --input data/raw.json --out-csv data/activities.csv
+    ```
+
+Notes
+- Respect Strava's API rate limits and terms of service.
+- If using Selenium/web scraping, ensure your approach complies with Strava usage policies.
+
+Contributing
+- Open an issue or pull request for improvements or bug fixes.
+
+License
+- Add an appropriate OSS license (e.g., MIT) in LICENSE file.
