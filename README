@@ -1,6 +1,6 @@
-# strava_data_scraping
+## Strava Data Scraping
 
-Small utilities to download and process Strava activity data.
+In this repository you'll find scripts to help you download your data from Strava into a PostGreSQL database.
 
 Overview
 - Two Python scripts:
